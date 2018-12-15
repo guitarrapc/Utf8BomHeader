@@ -7,11 +7,10 @@ install:
   - export PS_VERSION=6.1.0
   - export PS_PACKAGE=powershell_${PS_VERSION}-1.ubuntu.18.04_amd64.deb
   - export PS_PACKAGE_URL=https://github.com/PowerShell/PowerShell/releases/download/v${PS_VERSION}/${PS_PACKAGE}
-  - apt-get update && apt-get install -y wget
+  - sudo apt-get update && sudo apt-get install -y wget
   - wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
-  - dpkg -i packages-microsoft-prod.deb
-  - apt-get update
-  - apt-get install -y powershell
+  - sudo dpkg -i packages-microsoft-prod.deb
+  - sudo apt-get update && sudo apt-get install -y powershell
   - pwsh --version
   - pwsh -c Install-Module Pester -Scope CurrentUser -Force
 
