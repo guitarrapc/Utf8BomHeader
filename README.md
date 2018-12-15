@@ -21,3 +21,8 @@ Compare-Utf8BomHeader | Compare two files BOM header status
 Get-Utf8BomHeader | Get header of a file
 Remove-Utf8BomHeader | Remove BOM header from a file
 Test-Utf8BomHeader | Test is BOM header is exists on a file
+
+
+## Ref
+
+C# code : https://gist.github.com/guitarrapc/aac20b599e519e48656ca1ae6f642834
