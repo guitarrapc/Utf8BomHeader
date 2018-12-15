@@ -11,7 +11,6 @@ PowerShell Module to check file BOM on Utf8.
 Install-Module Utf8BomHeader -Scope CurrentUser
 ```
 
-
 ## Functions
 
 Function | Description

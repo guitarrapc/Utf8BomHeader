@@ -1,0 +1,21 @@
+image: mcr.microsoft.com/powershell:6.1.0-ubuntu-18.04
+version: '{branch}.{build}'
+shallow_clone: false
+skip_branch_with_pr: true
+
+install:
+  - pwsh -c Install-Module Pester -Scope CurrentUser -Force
+
+build: off
+
+build_script:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - pwsh -file ./build.ps1
+
+test_script:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - pwsh -c Invoke-Pester
+
+artifacts:
+  - path: datadog-agent-win.zip
+    name: datadog-agent-win
