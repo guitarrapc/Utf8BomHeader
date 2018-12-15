@@ -2,7 +2,24 @@ $cs = @"
 using System;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
+
+public class Utf8BomHeaderCompareResult
+{
+    public string SourceFile { get; }
+    public string SourceHeader { get; }
+    public string Equality { get; }
+    public string CompareFile { get; }
+    public string CompareHeader { get; }
+    
+    public Utf8BomHeaderCompareResult(string sourceFile, string sourceHeader, string equality, string compareFile, string compareHeader)
+    {
+        SourceFile = sourceFile;
+        SourceHeader = sourceHeader;
+        Equality = equality;
+        CompareFile = compareFile;
+        CompareHeader = compareHeader;
+    }
+}
 
 public static class FileHeader
 {
@@ -10,7 +27,7 @@ public static class FileHeader
     {
         using (var stream = new System.IO.FileStream(path, FileMode.Open))
         {
-            var reads = Enumerable.Range(1, count).Select(x => stream.ReadByte().ToString("x2")).ToArray();
+            var reads = Enumerable.Range(1, count).Select(x => stream.ReadByte().ToString("X2")).ToArray();
             return string.Join("", reads);
         }
     }
@@ -19,7 +36,7 @@ public static class FileHeader
     {
         using (var stream = file.OpenRead())
         {
-            var reads = Enumerable.Range(1, count).Select(x => stream.ReadByte().ToString("x2")).ToArray();
+            var reads = Enumerable.Range(1, count).Select(x => stream.ReadByte().ToString("X2")).ToArray();
             return string.Join("", reads);
         }
     }
@@ -67,11 +84,13 @@ public static class FileHeader
         File.WriteAllBytes(dest, buffer);
     }
     
-    public static bool Compare(string source1, string source2)
+    public static Utf8BomHeaderCompareResult Compare(string sourcePath, string comparePath, int count, string check)
     {
-        var hash1 = GetFileHash(source1);
-        var hash2 = GetFileHash(source2);
-        return hash1 == hash2;
+        var sourceHeader = Read(sourcePath, count);
+        var compareHeader = Read(comparePath, count);
+        var sourceSymbol = sourceHeader == check ? "=" : "<";
+        var compareSymbol = compareHeader == check ? "=" : ">";
+        return new Utf8BomHeaderCompareResult(sourcePath, sourceHeader, sourceSymbol + compareSymbol, comparePath, compareHeader);
     }
 
     private static byte[] Combine(byte[] first, byte[] second)
@@ -81,23 +100,13 @@ public static class FileHeader
         Buffer.BlockCopy(second, 0, ret, first.Length, second.Length);
         return ret;
     }
-
-    private static string GetFileHash(string file)
-    {
-        using (FileStream stream = File.OpenRead(file))
-        {
-            var sha = new SHA256Managed();
-            byte[] hash = sha.ComputeHash(stream);
-            return BitConverter.ToString(hash).Replace("-", String.Empty);
-        }
-    }
 }
 "@
 Add-Type -TypeDefinition $cs -Language CSharpVersion7
 
-[byte[]]$bom = 239, 187, 191
-$bomHex = "EFBBBF"
-$removeOffset = 3
+New-Variable -Name removeOffset -Value 3 -Option Constant
+New-Variable -Name bomHex -Value "EFBBBF" -Option Constant
+New-Variable -Name bom -Value 239,187,191 -Option Constant
 
 function Add-Utf8BomHeader {
     [CmdletBinding(DefaultParameterSetName = "File")]
@@ -111,14 +120,34 @@ function Add-Utf8BomHeader {
         [string]$Path,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
-        [string]$OutputPath
+        [string]$OutputPath,
+
+        [Switch]$Force
     )
 
     process {
         if ($PSBoundParameters.ContainsKey("File")) {
+            if (!$Force) {
+                $header = [FileHeader]::Read($File, $removeOffset)
+                if ($header -eq $bomHex) {
+                    Write-Verbose "Bom already exists."
+                    return
+                }
+            } else {
+                Write-Verbose "-Force paramter detected, skip checking bom header before operation."
+            }
             [FileHeader]::Write($File, $OutputPath, $bom)
         }
         else {
+            if (!$Force) {
+                $header = [FileHeader]::Read($Path, $removeOffset)
+                if ($header -eq $bomHex) {
+                    Write-Verbose "Bom already exists."
+                    return
+                }
+            } else {
+                Write-Verbose "-Force paramter detected, skip checking bom header before operation."
+            }
             [FileHeader]::Write($Path, $OutputPath, $bom)
         }
     }
@@ -136,14 +165,34 @@ function Remove-Utf8BomHeader {
         [string]$Path,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
-        [string]$OutputPath
+        [string]$OutputPath,
+
+        [Switch]$Force
     )
 
     process {
         if ($PSBoundParameters.ContainsKey("File")) {
+            if (!$Force) {
+                $header = [FileHeader]::Read($File, $removeOffset)
+                if ($header -ne $bomHex) {
+                    Write-Verbose "header $header($bomHex) : Bom already missing."
+                    return
+                }
+            } else {
+                Write-Verbose "-Force paramter detected, skip checking bom header before operation."
+            }
             [FileHeader]::Remove($File, $OutputPath, $removeOffset)
         }
         else {
+            if (!$Force) {
+                $header = [FileHeader]::Read($Path, $removeOffset)
+                if ($header -ne $bomHex) {
+                    Write-Verbose "header $header($bomHex) : Bom already missing."
+                    return
+                }
+            } else {
+                Write-Verbose "-Force paramter detected, skip checking bom header before operation."
+            }
             [FileHeader]::Remove($Path, $OutputPath, $removeOffset)
         }
     }
@@ -158,19 +207,38 @@ function Get-Utf8BomHeader {
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = "Path")]
         [Alias("LiteralPath", "PSPath")]
-        [string]$Path
+        [string]$Path,
+
+        [Alias("Count")]
+        [int]$ReadCount = $removeOffset
     )
 
     process {
         if ($PSBoundParameters.ContainsKey("File")) {
-            $header = [FileHeader]::Read($File, 3)
-            $header
+            $header = [FileHeader]::Read($File, $ReadCount)
+            Write-Output $header
         }
         else {
-            $header = [FileHeader]::Read($Path, 3)
-            $header
+            $header = [FileHeader]::Read($Path, $ReadCount)
+            Write-Output $header
         }
     }
+}
+
+function Compare-Utf8BomHeader {
+    [OutputType([Utf8BomHeaderCompareResult])]
+    param(
+        [Parameter(Mandatory = $true)]
+        [Alias("Source")]
+        [string]$ReferenceFile,
+
+        [Parameter(Mandatory = $true)]
+        [Alias("Target")]
+        [string]$DifferenceFile
+    )
+
+    $compare = [FileHeader]::Compare($ReferenceFile, $DifferenceFile, $removeOffset, $bomHex)
+    Write-Output $compare
 }
 
 function Test-Utf8BomHeader {
@@ -187,30 +255,14 @@ function Test-Utf8BomHeader {
 
     process {
         if ($PSBoundParameters.ContainsKey("File")) {
-            $header = [FileHeader]::Read($File, 3)
+            $header = [FileHeader]::Read($File, $removeOffset)
             Write-Output ($header -eq $bomHex)
         }
         else {
-            $header = [FileHeader]::Read($Path, 3)
+            $header = [FileHeader]::Read($Path, $removeOffset)
             Write-Output ($header -eq $bomHex)
         }
     }
-}
-
-function Compare-Utf8BomHeader {
-    [OutputType([bool])]
-    param(
-        [Parameter(Mandatory = $true)]
-        [Alias("Source")]
-        [string]$ReferenceFile,
-
-        [Parameter(Mandatory = $true)]
-        [Alias("Target")]
-        [string]$DifferenceFile
-    )
-
-    $compare = [FileHeader]::Compare($ReferenceFile, $DifferenceFile)
-    Write-Output $compare
 }
 
 function Test-Utf8BomHeaderPS {
@@ -251,15 +303,15 @@ function Test-Utf8BomHeaderPS {
     }
 }
 
-# $path = "D:\GitHub\guitarrapc\AWSLambdaCSharpIntroduction"
+# $path = "D:\GitHub\guitarrapc\AWSLambdaCSharpIntroduction\AWSLambdaCSharpIntroduction.sln"
 # $remove = "D:\GitHub\remove.sln"
 # $add = "D:\GitHub\add.sln"
 # Import-Module ./Utf8BomHeader.psm1 -Force -Verbose
 # ls $path -File | Where-Object {Test-Utf8BomHeader -File $_}
 # ls $path -File | Where-Object {Test-Utf8BomHeader -File $_} | Get-Utf8BomHeader
-# ls $path -File | Where-Object {Test-Utf8BomHeader -File $_} | Remove-Utf8BomHeader -OutputPath 
+# ls $path -File | Where-Object {Test-Utf8BomHeader -File $_} | Remove-Utf8BomHeader -OutputPath $remove
 # Get-Utf8BomHeader -Path $remove
 # Add-Utf8BomHeader -Path $remove -OutputPath $add
 # Get-Utf8BomHeader -Path $add
-# Compare-Utf8BomHeader -ReferenceFile $file -DifferenceFile $add
+# Compare-Utf8BomHeader -ReferenceFile $path -DifferenceFile $add
 Export-ModuleMember -Function *-Utf8BomHeader, *-Utf8BomHeaderPS
