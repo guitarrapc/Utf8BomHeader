@@ -5,11 +5,11 @@ using System.Linq;
 
 public class Utf8BomHeaderCompareResult
 {
-    public string SourceFile { get; }
-    public string SourceHeader { get; }
-    public string Equality { get; }
-    public string CompareFile { get; }
-    public string CompareHeader { get; }
+    public string SourceFile { get; private set; }
+    public string SourceHeader { get; private set; }
+    public string Equality { get; private set; }
+    public string CompareFile { get; private set; }
+    public string CompareHeader { get; private set; }
     
     public Utf8BomHeaderCompareResult(string sourceFile, string sourceHeader, string equality, string compareFile, string compareHeader)
     {
@@ -102,7 +102,7 @@ public static class FileHeader
     }
 }
 "@
-Add-Type -TypeDefinition $cs -Language CSharpVersion7
+Add-Type -TypeDefinition $cs -Language CSharp
 
 New-Variable -Name removeOffset -Value 3 -Option Constant
 New-Variable -Name bomHex -Value "EFBBBF" -Option Constant

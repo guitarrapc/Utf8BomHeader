@@ -1,0 +1,105 @@
+﻿﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{33CADDEF-2606-4D1E-AB00-9982BF9020E0}"
+	ProjectSection(SolutionItems) = preProject
+		circle.yml = circle.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GithubWebhook", "src\GithubWebhook\GithubWebhook\GithubWebhook.csproj", "{67FDA375-D728-4371-BA43-5E73B85C7086}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LambdaShared", "src\LambdaShared\LambdaShared.csproj", "{EBC20C25-3D20-4668-AE2D-0CB454EB2578}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GithubWebhook.Tests", "src\GithubWebhook\GithubWebhook.Tests\GithubWebhook.Tests.csproj", "{87E839C2-CCE9-42C2-A3B6-FF9A855757FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SendToChatwork.Tests", "src\SendToChatwork\SendToChatwork.Tests\SendToChatwork.Tests.csproj", "{28308C44-1D04-46DD-8AEB-0D741ECDE92B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SendToChatwork", "src\SendToChatwork\SendToChatwork\SendToChatwork.csproj", "{F3BC65CD-09E9-412E-8862-A1B39F95339A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAsyncFunction.Tests", "src\SimpleAsyncFunction\SimpleAsyncFunction.Tests\SimpleAsyncFunction.Tests.csproj", "{26141275-BF06-4CF5-B326-B02B613E4A7A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAsyncFunction", "src\SimpleAsyncFunction\SimpleAsyncFunction\SimpleAsyncFunction.csproj", "{0FFF08B1-3C16-4154-9376-5D7CCEFD0262}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleClassFunction", "src\SimpleClassFunction\SimpleClassFunction.csproj", "{6194EA03-993A-4C4C-B929-CE7B6F802756}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackSlashCommandWebhook.Tests", "src\SlackSlashCommandWebhook\SlackSlashCommandWebhook.Tests\SlackSlashCommandWebhook.Tests.csproj", "{60AC620A-1A9B-4D7B-912A-5EF6BB97C640}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackSlashCommandWebhook", "src\SlackSlashCommandWebhook\SlackSlashCommandWebhook\SlackSlashCommandWebhook.csproj", "{E7C1458C-AAE6-4968-BA2F-302BB5E266CF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnityCloudBuildNotificationProxy.Tests", "src\UnityCloudBuildNotificationProxy\UnityCloudBuildNotificationProxy.Tests\UnityCloudBuildNotificationProxy.Tests.csproj", "{072B6615-54A2-4285-9D7D-B5A98ADBAF17}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnityCloudBuildNotificationProxy", "src\UnityCloudBuildNotificationProxy\UnityCloudBuildNotificationProxy\UnityCloudBuildNotificationProxy.csproj", "{4FB98D81-B1D1-4FA0-A6F1-B091956673D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvironmentVariables.Tests", "src\EnvironmentVariables\EnvironmentVariables.Tests\EnvironmentVariables.Tests.csproj", "{95894CA8-D40D-4958-90B0-7C6D9421E252}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvironmentVariables", "src\EnvironmentVariables\EnvironmentVariables\EnvironmentVariables.csproj", "{86635A33-C5F2-4B78-B733-A1563B46BF56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67FDA375-D728-4371-BA43-5E73B85C7086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67FDA375-D728-4371-BA43-5E73B85C7086}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67FDA375-D728-4371-BA43-5E73B85C7086}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67FDA375-D728-4371-BA43-5E73B85C7086}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBC20C25-3D20-4668-AE2D-0CB454EB2578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBC20C25-3D20-4668-AE2D-0CB454EB2578}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBC20C25-3D20-4668-AE2D-0CB454EB2578}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBC20C25-3D20-4668-AE2D-0CB454EB2578}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87E839C2-CCE9-42C2-A3B6-FF9A855757FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87E839C2-CCE9-42C2-A3B6-FF9A855757FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87E839C2-CCE9-42C2-A3B6-FF9A855757FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87E839C2-CCE9-42C2-A3B6-FF9A855757FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28308C44-1D04-46DD-8AEB-0D741ECDE92B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28308C44-1D04-46DD-8AEB-0D741ECDE92B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28308C44-1D04-46DD-8AEB-0D741ECDE92B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28308C44-1D04-46DD-8AEB-0D741ECDE92B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3BC65CD-09E9-412E-8862-A1B39F95339A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3BC65CD-09E9-412E-8862-A1B39F95339A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3BC65CD-09E9-412E-8862-A1B39F95339A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3BC65CD-09E9-412E-8862-A1B39F95339A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26141275-BF06-4CF5-B326-B02B613E4A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26141275-BF06-4CF5-B326-B02B613E4A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26141275-BF06-4CF5-B326-B02B613E4A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26141275-BF06-4CF5-B326-B02B613E4A7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FFF08B1-3C16-4154-9376-5D7CCEFD0262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FFF08B1-3C16-4154-9376-5D7CCEFD0262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FFF08B1-3C16-4154-9376-5D7CCEFD0262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FFF08B1-3C16-4154-9376-5D7CCEFD0262}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6194EA03-993A-4C4C-B929-CE7B6F802756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6194EA03-993A-4C4C-B929-CE7B6F802756}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6194EA03-993A-4C4C-B929-CE7B6F802756}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6194EA03-993A-4C4C-B929-CE7B6F802756}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60AC620A-1A9B-4D7B-912A-5EF6BB97C640}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60AC620A-1A9B-4D7B-912A-5EF6BB97C640}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60AC620A-1A9B-4D7B-912A-5EF6BB97C640}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60AC620A-1A9B-4D7B-912A-5EF6BB97C640}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7C1458C-AAE6-4968-BA2F-302BB5E266CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7C1458C-AAE6-4968-BA2F-302BB5E266CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7C1458C-AAE6-4968-BA2F-302BB5E266CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7C1458C-AAE6-4968-BA2F-302BB5E266CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{072B6615-54A2-4285-9D7D-B5A98ADBAF17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{072B6615-54A2-4285-9D7D-B5A98ADBAF17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{072B6615-54A2-4285-9D7D-B5A98ADBAF17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{072B6615-54A2-4285-9D7D-B5A98ADBAF17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FB98D81-B1D1-4FA0-A6F1-B091956673D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FB98D81-B1D1-4FA0-A6F1-B091956673D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FB98D81-B1D1-4FA0-A6F1-B091956673D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FB98D81-B1D1-4FA0-A6F1-B091956673D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95894CA8-D40D-4958-90B0-7C6D9421E252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95894CA8-D40D-4958-90B0-7C6D9421E252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95894CA8-D40D-4958-90B0-7C6D9421E252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95894CA8-D40D-4958-90B0-7C6D9421E252}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86635A33-C5F2-4B78-B733-A1563B46BF56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86635A33-C5F2-4B78-B733-A1563B46BF56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86635A33-C5F2-4B78-B733-A1563B46BF56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86635A33-C5F2-4B78-B733-A1563B46BF56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

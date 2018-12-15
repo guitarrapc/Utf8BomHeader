@@ -72,3 +72,7 @@ StyleCop.Cache
 # GitKracken Files
 .gk/
 gkconfig.yml
+
+# Project
+publish/
+tests/backup/
