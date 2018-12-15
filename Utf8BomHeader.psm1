@@ -130,7 +130,7 @@ function Add-Utf8BomHeader {
             if (!$Force) {
                 $header = [FileHeader]::Read($File, $removeOffset)
                 if ($header -eq $bomHex) {
-                    Write-Verbose "Bom already exists."
+                    Write-Verbose "Bom already exists, detected header : $header"
                     return
                 }
             } else {
@@ -142,7 +142,7 @@ function Add-Utf8BomHeader {
             if (!$Force) {
                 $header = [FileHeader]::Read($Path, $removeOffset)
                 if ($header -eq $bomHex) {
-                    Write-Verbose "Bom already exists."
+                    Write-Verbose "Bom already exists, detected header : $header"
                     return
                 }
             } else {
@@ -175,7 +175,7 @@ function Remove-Utf8BomHeader {
             if (!$Force) {
                 $header = [FileHeader]::Read($File, $removeOffset)
                 if ($header -ne $bomHex) {
-                    Write-Verbose "header $header($bomHex) : Bom already missing."
+                    Write-Verbose "Bom already missing, detected header : $header"
                     return
                 }
             } else {
@@ -187,7 +187,7 @@ function Remove-Utf8BomHeader {
             if (!$Force) {
                 $header = [FileHeader]::Read($Path, $removeOffset)
                 if ($header -ne $bomHex) {
-                    Write-Verbose "header $header($bomHex) : Bom already missing."
+                    Write-Verbose "Bom already missing, detected header : $header"
                     return
                 }
             } else {
