@@ -40,8 +40,8 @@ build: off
 
 build_script:
   - cd $APPVEYOR_BUILD_FOLDER
-  - pwsh -file ./run_build.ps1 -Version ${APPVEYOR_BUILD_VERSION }
-  - 7z a ./publish/Utf8BomHeader/ ./publish/publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION }.zip
+  - pwsh -file ./run_build.ps1 -Version ${APPVEYOR_BUILD_VERSION}
+  - 7z a ./publish/Utf8BomHeader/ ./publish/publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip
 
 test_script:
   - cd $APPVEYOR_BUILD_FOLDER
@@ -61,5 +61,5 @@ deploy:
     APPVEYOR_REPO_TAG: true        # deploy on tag push only
 
 artifacts:
-  - path: ./publish/publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION }.zip
-    name: Utf8BomHeader_${APPVEYOR_BUILD_VERSION }
+  - path: ./publish/publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip
+    name: Utf8BomHeader_${APPVEYOR_BUILD_VERSION}
