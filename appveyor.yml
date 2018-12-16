@@ -3,6 +3,16 @@ version: '{branch}.{build}'
 shallow_clone: false
 skip_branch_with_pr: true
 
+branches:
+  only:
+    - master
+
+environment:
+  PS_GELLERY_RELEASE_API:
+    secure: xBR5JNFYMUisp+oIx08EbfQ5xWsToa0XufJKuyaazeXy9wYcs6Fezw//NtW60uOF
+  GITHUB_RELEASE_API:
+    secure: s55znS9PHRv9SOXWiAmrxjj9c166WrBKTFz7cQmA0wLp9tGzREudX8XmaqbQH3YT
+
 install:
   - export NETCORE_VERSION=2.2
   - sudo apt-get update && sudo apt-get install -y wget
@@ -30,12 +40,26 @@ build: off
 
 build_script:
   - cd $APPVEYOR_BUILD_FOLDER
-  - pwsh -file ./run_build.ps1 -Version ${APPVEYOR_BUILD_VERSION}
+  - pwsh -file ./run_build.ps1 -Version ${APPVEYOR_REPO_TAG_NAME}
+  - 7z a ./publish/Utf8BomHeader/ ./publish/publish/Utf8BomHeader_${APPVEYOR_REPO_TAG_NAME}.zip
 
 test_script:
   - cd $APPVEYOR_BUILD_FOLDER
   - pwsh -c Invoke-Pester
 
+deploy:
+  release: ${APPVEYOR_REPO_TAG_NAME}
+  description: "${APPVEYOR_REPO_TAG_NAME} Release"
+  provider: GitHub
+  auth_token:
+    secure: ${GITHUB_RELEASE_API}
+  artifact: ./publish/publish/Utf8BomHeader_${APPVEYOR_REPO_TAG_NAME}.zip            # upload all NuGet packages to release assets
+  draft: false
+  prerelease: false
+  on:
+    branch: master                 # release from master branch only
+    APPVEYOR_REPO_TAG: true        # deploy on tag push only
+
 artifacts:
-  - path: datadog-agent-win.zip
-    name: datadog-agent-win
+  - path: ./publish/publish/Utf8BomHeader_${APPVEYOR_REPO_TAG_NAME}.zip
+    name: Utf8BomHeader_${APPVEYOR_REPO_TAG_NAME}
