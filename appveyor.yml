@@ -1,5 +1,5 @@
 image: ubuntu
-version: '{branch}.{build}'
+version: '1.0.{build}'
 shallow_clone: false
 skip_branch_with_pr: true
 
@@ -40,8 +40,8 @@ build: off
 
 build_script:
   - cd $APPVEYOR_BUILD_FOLDER
-  - pwsh -file ./run_build.ps1 -Version ${APPVEYOR_REPO_TAG_NAME}
-  - 7z a ./publish/Utf8BomHeader/ ./publish/publish/Utf8BomHeader_${APPVEYOR_REPO_TAG_NAME}.zip
+  - pwsh -file ./run_build.ps1 -Version ${APPVEYOR_BUILD_VERSION }
+  - 7z a ./publish/Utf8BomHeader/ ./publish/publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION }.zip
 
 test_script:
   - cd $APPVEYOR_BUILD_FOLDER
@@ -61,5 +61,5 @@ deploy:
     APPVEYOR_REPO_TAG: true        # deploy on tag push only
 
 artifacts:
-  - path: ./publish/publish/Utf8BomHeader_${APPVEYOR_REPO_TAG_NAME}.zip
-    name: Utf8BomHeader_${APPVEYOR_REPO_TAG_NAME}
+  - path: ./publish/publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION }.zip
+    name: Utf8BomHeader_${APPVEYOR_BUILD_VERSION }
