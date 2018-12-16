@@ -26,7 +26,7 @@ Write-Host -ForegroundColor Green 'Running AppVeyor deploy script'
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $moduleName = Split-Path -Path $here -Leaf
 $modulePath = Join-Path "$here" "publish"
-$manifestPath = Join-Path "$modulePath/$moduleName" "$moduleName.psd1"
+$manifestPath = "$here/src/$moduleName.psd1"
 $version = $env:APPVEYOR_REPO_TAG_NAME
 
 # Update module manifest 
