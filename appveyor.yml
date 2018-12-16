@@ -12,6 +12,7 @@ environment:
     secure: xBR5JNFYMUisp+oIx08EbfQ5xWsToa0XufJKuyaazeXy9wYcs6Fezw//NtW60uOF
   GITHUB_RELEASE_API:
     secure: s55znS9PHRv9SOXWiAmrxjj9c166WrBKTFz7cQmA0wLp9tGzREudX8XmaqbQH3YT
+  GUID: 11da18bb-f0d4-4509-b709-8b17efd8bb17
 
 install:
   - export NETCORE_VERSION=2.2
@@ -59,6 +60,9 @@ deploy:
   on:
     branch: master                 # release from master branch only
     APPVEYOR_REPO_TAG: true        # deploy on tag push only
+
+deploy_script:
+  - pwsh -file ./run_psgallery_deploy.ps1 -Version ${APPVEYOR_REPO_TAG_NAME} -NuGetApiKey ${PS_GELLERY_RELEASE_API}
 
 artifacts:
   - path: ./publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip
