@@ -33,6 +33,7 @@ $releaseNoteUrl = "https://github.com/guitarrapc/Utf8BomHeader/releases/tag/$ver
 # Update module manifest 
 Write-Host -ForegroundColor Green 'Creating new module manifest'
 . ./run_build.ps1 -Version $version
+Update-ModuleManifest -Path $manifestPath -ReleaseNotes $releaseNoteUrl
 
 # Test Version is correct
 $manifest = Invoke-Expression (Get-Content $manifestPath -Raw)
@@ -43,4 +44,4 @@ if ($manifest.ModuleVersion -ne $version) {
 # Publish to PS Gallery
 Write-Host -ForeGroundColor Green 'Publishing module to Powershell Gallery'
 Import-Module $manifestPath -PassThru -Verbose
-Publish-Module -Path $modulePath -NuGetApiKey $NuGetApiKey -ReleaseNotes $releaseNoteUrl
+Publish-Module -Path $modulePath -NuGetApiKey $NuGetApiKey
