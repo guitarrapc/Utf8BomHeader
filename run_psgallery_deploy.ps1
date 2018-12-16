@@ -7,20 +7,20 @@ param (
 
 # validation
 if ($env:APPVEYOR_REPO_BRANCH -notmatch $BuildBranch) {
-    Write-Host "`"Appveyor`" deployment has been skipped as environment variable has not matched (`"$env:APPVEYOR_REPO_BRANCH`" is `"$branch`", should be `"$branch`"" -ForGroundColor Yellow
+    Write-Host -ForGroundColor Yellow "`"Appveyor`" deployment has been skipped as environment variable has not matched (`"$env:APPVEYOR_REPO_BRANCH`" is `"$branch`", should be `"$branch`""
     return
 }
 if ([string]::IsNullOrWhiteSpace($env:APPVEYOR_REPO_TAG_NAME)) {
-    Write-Host "`"Appveyor`" deployment has been skipped as environment variable has not matched (`"$env:APPVEYOR_REPO_TAG_NAME`" is blank)" -ForGroundColor Yellow
+    Write-Host -ForGroundColor Yellow "`"Appveyor`" deployment has been skipped as environment variable has not matched (`"$env:APPVEYOR_REPO_TAG_NAME`" is blank)"
     return
 }
 if ([string]::IsNullOrWhiteSpace($NuGetApiKey)) {
-    Write-Host "`"Appveyor`" deployment has been skipped as `"NuGetApiKey`" is not specified." -ForGroundColor Yellow
+    Write-Host -ForGroundColor Yellow "`"Appveyor`" deployment has been skipped as `"NuGetApiKey`" is not specified."
     return
 }
 
 # Run
-Write-Host 'Running AppVeyor deploy script' -ForegroundColor Green
+Write-Host -ForegroundColor Green 'Running AppVeyor deploy script'
 
 # environment variables
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -30,7 +30,7 @@ $manifestPath = Join-Path "$modulePath/$moduleName" "$moduleName.psd1"
 $version = $env:APPVEYOR_REPO_TAG_NAME
 
 # Update module manifest 
-Write-Host 'Creating new module manifest' -ForGroundColor Green
+Write-Host -ForegroundColor Green 'Creating new module manifest'
 . ./run_build.ps1 -Version $version
 
 # Test Version is correct
@@ -41,7 +41,7 @@ if ($manifest.ModuleVersion -ne $Version) {
 }
 
 # Publish to PS Gallery
-Write-Host "Adding $modulePath to 'psmodulepath' PATH variable" -ForGroundColor Green
+Write-Host -ForegroundColor Green "Adding $modulePath to 'psmodulepath' PATH variable"
 $env:psmodulepath = "${modulePath}:${env:psmodulepath}"
-Write-Host 'Publishing module to Powershell Gallery' -ForGroundColor Green
+Write-Host -ForGroundColor Green 'Publishing module to Powershell Gallery'
 Publish-Module -Name $moduleName -NuGetApiKey $NuGetApiKey
