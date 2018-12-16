@@ -25,6 +25,7 @@ Write-Host -ForegroundColor Green 'Running AppVeyor deploy script'
 # environment variables
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $moduleName = "Utf8BomHeader"
+$modulePath = "$here/publish/$moduleName"
 $manifestPath = "$here/publish/$moduleName/$moduleName.psd1"
 $version = $env:APPVEYOR_REPO_TAG_NAME
 $releaseNoteUrl = "https://github.com/guitarrapc/Utf8BomHeader/releases/tag/$version"
@@ -41,4 +42,5 @@ if ($manifest.ModuleVersion -ne $version) {
 
 # Publish to PS Gallery
 Write-Host -ForeGroundColor Green 'Publishing module to Powershell Gallery'
-Import-Module $manifestPath -PassThru | Publish-Module -NuGetApiKey $NuGetApiKey -ReleaseNotes $releaseNoteUrl
+Import-Module $manifestPath -PassThru -Verbose
+Publish-Module -Path $modulePath -NuGetApiKey $NuGetApiKey -ReleaseNotes $releaseNoteUrl
