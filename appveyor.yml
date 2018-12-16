@@ -30,7 +30,7 @@ build: off
 
 build_script:
   - cd $APPVEYOR_BUILD_FOLDER
-  - pwsh -file ./build.ps1
+  - pwsh -file ./run_build.ps1
 
 test_script:
   - cd $APPVEYOR_BUILD_FOLDER
