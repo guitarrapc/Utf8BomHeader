@@ -11,13 +11,13 @@ $targets = "Utf8BomHeader.ps*1"
 
 # validation
 if ([string]::IsNullOrWhiteSpace($Version)) {
-    Write-Warning "Version not specified, please specify semantic version."
+    Write-Host -ForeGroundColor Yellow "Version not specified, please specify semantic version."
     return;
 }
 if (Test-Path $path) {
     $manifest = Invoke-Expression (Get-Content $path -Raw)
     if ($manifest.ModuleVersion -eq $Version) {
-        Write-Warning "Same version specified, nothing to do."
+        Write-Host -ForeGroundColor Yellow "Same version specified, nothing to do."
         return;
     }
 }

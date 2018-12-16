@@ -7,15 +7,15 @@ param (
 
 # validation
 if ($env:APPVEYOR_REPO_BRANCH -notmatch $BuildBranch) {
-    Write-Host -ForGroundColor Yellow "`"Appveyor`" deployment has been skipped as environment variable has not matched (`"$env:APPVEYOR_REPO_BRANCH`" is `"$branch`", should be `"$branch`""
+    Write-Host -ForeGroundColor Yellow "`"Appveyor`" deployment has been skipped as environment variable has not matched (`"$env:APPVEYOR_REPO_BRANCH`" is `"$branch`", should be `"$branch`""
     return
 }
 if ([string]::IsNullOrWhiteSpace($env:APPVEYOR_REPO_TAG_NAME)) {
-    Write-Host -ForGroundColor Yellow "`"Appveyor`" deployment has been skipped as environment variable has not matched (`"$env:APPVEYOR_REPO_TAG_NAME`" is blank)"
+    Write-Host -ForeGroundColor Yellow "`"Appveyor`" deployment has been skipped as environment variable has not matched (`"$env:APPVEYOR_REPO_TAG_NAME`" is blank)"
     return
 }
 if ([string]::IsNullOrWhiteSpace($NuGetApiKey)) {
-    Write-Host -ForGroundColor Yellow "`"Appveyor`" deployment has been skipped as `"NuGetApiKey`" is not specified."
+    Write-Host -ForeGroundColor Yellow "`"Appveyor`" deployment has been skipped as `"NuGetApiKey`" is not specified."
     return
 }
 
@@ -36,12 +36,11 @@ Write-Host -ForegroundColor Green 'Creating new module manifest'
 # Test Version is correct
 $manifest = Invoke-Expression (Get-Content $manifestPath -Raw)
 if ($manifest.ModuleVersion -ne $Version) {
-    Write-Host "`"Appveyor`" deployment has been canceled. Version update failed (`Manifest Version is `"${$manifest.ModuleVersion}`", should be `"$version`")" -ForGroundColor Yellow
-    throw
+    throw "`"Appveyor`" deployment has been canceled. Version update failed (`Manifest Version is `"${$manifest.ModuleVersion}`", should be `"$version`")"
 }
 
 # Publish to PS Gallery
 Write-Host -ForegroundColor Green "Adding $modulePath to 'psmodulepath' PATH variable"
 $env:psmodulepath = "${modulePath}:${env:psmodulepath}"
-Write-Host -ForGroundColor Green 'Publishing module to Powershell Gallery'
+Write-Host -ForeGroundColor Green 'Publishing module to Powershell Gallery'
 Publish-Module -Name $moduleName -NuGetApiKey $NuGetApiKey
