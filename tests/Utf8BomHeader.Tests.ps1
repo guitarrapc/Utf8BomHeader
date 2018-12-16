@@ -18,7 +18,7 @@ Describe "Utf8BomHeader" {
         if (Test-Path $tmpnobomfile) {
             Remove-Item $tmpnobomfile -Force
         }
-        mkdir $backup -Force
+        New-Item $backup -ItemType Directory -Force
         Copy-Item $here/*.txt -Destination $backup/
     }
     AfterAll {
