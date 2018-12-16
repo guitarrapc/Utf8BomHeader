@@ -24,7 +24,7 @@ if (Test-Path $path) {
 
 # setup
 function Update([string]$Path, [string]$Version, [string]$Guid){
-    New-ModuleManifest -Path $Path -Guid $Guid -Author guitarrapc -Copyright guitarrapc -ModuleVersion $Version -RootModule Utf8BomHeader.psm1 -Description "PowerShell Module to operate UTF8-Bom Header" -CompatiblePSEditions Core,Desktop -Tags UTF8BOM -ProjectUri https://github.com/guitarrapc/Utf8BomHeader -LicenseUri https://github.com/guitarrapc/Utf8BomHeader/blob/master/LICENSE.md
+    New-ModuleManifest -Path $Path -Guid $Guid -Author guitarrapc -ModuleVersion $Version -RootModule Utf8BomHeader.psm1 -Description "PowerShell Module to operate UTF8-Bom Header" -CompatiblePSEditions Core,Desktop -Tags UTF8BOM -ProjectUri https://github.com/guitarrapc/Utf8BomHeader -LicenseUri https://github.com/guitarrapc/Utf8BomHeader/blob/master/LICENSE.md
 }
 
 function Prepare([string]$Path) {
