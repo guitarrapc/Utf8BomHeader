@@ -6,9 +6,10 @@ skip_branch_with_pr: true
 install:
   - export NETCORE_VERSION=2.2
   - sudo apt-get update && sudo apt-get install -y wget
-  # .net core
+  # libicu60
   - wget http://mirrors.kernel.org/ubuntu/pool/main/i/icu/libicu60_60.2-6ubuntu1_amd64.deb
   - sudo dpkg -i libicu60_60.2-6ubuntu1_amd64.deb
+  # .net core
   - wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
   - sudo dpkg -i packages-microsoft-prod.deb
   - sudo add-apt-repository universe
@@ -28,11 +29,11 @@ install:
 build: off
 
 build_script:
-  - cd %APPVEYOR_BUILD_FOLDER%
+  - cd $APPVEYOR_BUILD_FOLDER
   - pwsh -file ./build.ps1
 
 test_script:
-  - cd %APPVEYOR_BUILD_FOLDER%
+  - cd $APPVEYOR_BUILD_FOLDER
   - pwsh -c Invoke-Pester
 
 artifacts:
