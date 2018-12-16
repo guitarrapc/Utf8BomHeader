@@ -41,7 +41,7 @@ build: off
 build_script:
   - cd $APPVEYOR_BUILD_FOLDER
   - pwsh -file ./run_build.ps1 -Version ${APPVEYOR_BUILD_VERSION}
-  - 7z a ./publish/Utf8BomHeader/ ./publish/publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip
+  - 7z a ./publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip ./publish/Utf8BomHeader/
 
 test_script:
   - cd $APPVEYOR_BUILD_FOLDER
@@ -53,7 +53,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: ${GITHUB_RELEASE_API}
-  artifact: ./publish/publish/Utf8BomHeader_${APPVEYOR_REPO_TAG_NAME}.zip            # upload all NuGet packages to release assets
+  artifact: ./publish/Utf8BomHeader_${APPVEYOR_REPO_TAG_NAME}.zip            # upload all NuGet packages to release assets
   draft: false
   prerelease: false
   on:
@@ -61,5 +61,5 @@ deploy:
     APPVEYOR_REPO_TAG: true        # deploy on tag push only
 
 artifacts:
-  - path: ./publish/publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip
+  - path: ./publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip
     name: Utf8BomHeader_${APPVEYOR_BUILD_VERSION}
