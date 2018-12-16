@@ -12,7 +12,7 @@ install:
   - sudo add-apt-repository universe
   - sudo apt-get -y install apt-transport-https
   - sudo apt-get update
-  - sudo apt-get install dotnet-sdk-${NETCORE_VERSION}
+  - sudo apt-get -y install dotnet-runtime-${NETCORE_VERSION} aspnetcore-runtime-${NETCORE_VERSION} dotnet-sdk-${NETCORE_VERSION}
   # pwsh
   - export PS_VERSION=6.1.0
   - export PS_PACKAGE=powershell_${PS_VERSION}-1.ubuntu.18.04_amd64.deb
