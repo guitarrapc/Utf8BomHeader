@@ -24,7 +24,7 @@ Write-Host -ForegroundColor Green 'Running AppVeyor deploy script'
 
 # environment variables
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$moduleName = Split-Path -Path $here -Leaf
+$moduleName = "Utf8BomHeader"
 $modulePath = Join-Path "$here" "publish"
 $manifestPath = "$here/src/$moduleName.psd1"
 $version = $env:APPVEYOR_REPO_TAG_NAME
