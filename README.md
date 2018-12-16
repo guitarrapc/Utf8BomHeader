@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/jvb3u412phhl43nh/branch/master?svg=true)](https://ci.appveyor.com/project/guitarrapc/utf8bomheader/branch/master)
+
 ## Utf8BomHeader
 
 PowerShell Module to check file BOM on Utf8.
