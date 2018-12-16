@@ -37,4 +37,4 @@ function Prepare([string]$Path) {
 # run
 Update -Path $path -Version $Version -Guid $Guid
 Prepare -Path ./publish/Utf8BomHeader
-Copy-Item -Path src/*,LICENSE.md -Destination "$publish/"
+Copy-Item -Path src/*,*.md -Destination "$publish/"

@@ -28,6 +28,7 @@ $moduleName = "Utf8BomHeader"
 $modulePath = Join-Path "$here" "publish"
 $manifestPath = "$here/src/$moduleName.psd1"
 $version = $env:APPVEYOR_REPO_TAG_NAME
+$releaseNoteUrl = "https://github.com/guitarrapc/Utf8BomHeader/releases/tag/$version"
 
 # Update module manifest 
 Write-Host -ForegroundColor Green 'Creating new module manifest'
@@ -40,7 +41,5 @@ if ($manifest.ModuleVersion -ne $Version) {
 }
 
 # Publish to PS Gallery
-Write-Host -ForegroundColor Green "Adding $modulePath to 'psmodulepath' PATH variable"
-$env:psmodulepath = "${modulePath}:${env:psmodulepath}"
 Write-Host -ForeGroundColor Green 'Publishing module to Powershell Gallery'
-Publish-Module -Name $moduleName -NuGetApiKey $NuGetApiKey
+Publish-Module -Name $moduleName -NuGetApiKey $NuGetApiKey -Path $modulePath -ReleaseNotes $releaseNoteUrl

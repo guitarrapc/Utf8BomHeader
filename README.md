@@ -21,6 +21,9 @@ Get-Utf8BomHeader | Get header of a file
 Remove-Utf8BomHeader | Remove BOM header from a file
 Test-Utf8BomHeader | Test is BOM header is exists on a file
 
+## Usage
+
+See [Test](https://github.com/guitarrapc/Utf8BomHeader/blob/master/tests/Utf8BomHeader.Tests.ps1)
 
 ## Ref
 
