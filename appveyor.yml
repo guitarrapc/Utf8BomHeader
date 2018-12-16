@@ -4,10 +4,19 @@ shallow_clone: false
 skip_branch_with_pr: true
 
 install:
+  - export NETCORE_VERSION=2.2
+  - sudo apt-get update && sudo apt-get install -y wget
+  # .net core
+  - wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
+  - sudo dpkg -i packages-microsoft-prod.deb
+  - sudo add-apt-repository universe
+  - sudo apt-get -y install apt-transport-https
+  - sudo apt-get update
+  - sudo apt-get install dotnet-sdk-${NETCORE_VERSION}
+  # pwsh
   - export PS_VERSION=6.1.0
   - export PS_PACKAGE=powershell_${PS_VERSION}-1.ubuntu.18.04_amd64.deb
   - export PS_PACKAGE_URL=https://github.com/PowerShell/PowerShell/releases/download/v${PS_VERSION}/${PS_PACKAGE}
-  - sudo apt-get update && sudo apt-get install -y wget libicu60
   - wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
   - sudo dpkg -i packages-microsoft-prod.deb
   - sudo apt-get update && sudo apt-get install -y powershell
