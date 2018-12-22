@@ -1,4 +1,4 @@
-image: microsoft/powershell:6.1.0-ubuntu-18.04
+image: microsoft/powershell:ubuntu-xenial
 version: '1.0.{build}'
 shallow_clone: false
 skip_branch_with_pr: true
