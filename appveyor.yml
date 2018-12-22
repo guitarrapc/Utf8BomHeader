@@ -2,6 +2,8 @@ image: Ubuntu1804
 version: '1.0.{build}'
 shallow_clone: false
 skip_branch_with_pr: true
+services:
+- docker
 
 branches:
   only:
