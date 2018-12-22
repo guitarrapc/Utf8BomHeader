@@ -27,6 +27,7 @@ build: off
 
 build_script:
   - docker run --rm -v "${PWD}/publish:/app/publish" utf8bomheader_build:latest "./build_psd1.ps1 -Version ${APPVEYOR_BUILD_VERSION}"
+  - ls ./publish
   - 7z a ./publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip ./publish/Utf8BomHeader/
 
 test_script:
