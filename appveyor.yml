@@ -28,8 +28,7 @@ build_script:
 
 test_script:
   - cd $APPVEYOR_BUILD_FOLDER
-  - pwsh -c "Invoke-Pester -OutputFormat NUnitXml -OutputFile ${APPVEYOR_BUILD_FOLDER}/TestResults.xml"
-  - pwsh -c "(New-Object 'System.Net.WebClient').UploadFile('https://ci.appveyor.com/api/testresults/nunit/${APPVEYOR_JOB_ID}', '${APPVEYOR_BUILD_FOLDER}/TestResults.xml')"
+  - pwsh -c "Invoke-Pester -OutputFormat NUnitXml -OutputFile testresult.xml"
 
 deploy:
   release: ${APPVEYOR_REPO_TAG_NAME}
@@ -53,4 +52,4 @@ artifacts:
 
 on_finish:
   - sh: |
-      find "$APPVEYOR_BUILD_FOLDER" -type f -name 'TestResults.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
+      find "$APPVEYOR_BUILD_FOLDER" -type f -name 'testresult.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/nunit/$APPVEYOR_JOB_ID"
