@@ -106,7 +106,7 @@ Add-Type -TypeDefinition $cs -Language CSharp
 
 New-Variable -Name removeOffset -Value 3 -Option Constant
 New-Variable -Name bomHex -Value "EFBBBF" -Option Constant
-New-Variable -Name bom -Value 239,187,191 -Option Constant
+New-Variable -Name bom -Value 239, 187, 191 -Option Constant
 
 function Add-Utf8BomHeader {
     [CmdletBinding(DefaultParameterSetName = "File")]
@@ -133,7 +133,8 @@ function Add-Utf8BomHeader {
                     Write-Verbose "Bom already exists, detected header : $header"
                     return
                 }
-            } else {
+            }
+            else {
                 Write-Verbose "-Force paramter detected, skip checking bom header before operation."
             }
             [FileHeader]::Write($File, $OutputPath, $bom)
@@ -145,7 +146,8 @@ function Add-Utf8BomHeader {
                     Write-Verbose "Bom already exists, detected header : $header"
                     return
                 }
-            } else {
+            }
+            else {
                 Write-Verbose "-Force paramter detected, skip checking bom header before operation."
             }
             [FileHeader]::Write($Path, $OutputPath, $bom)
@@ -178,7 +180,8 @@ function Remove-Utf8BomHeader {
                     Write-Verbose "Bom already missing, detected header : $header"
                     return
                 }
-            } else {
+            }
+            else {
                 Write-Verbose "-Force paramter detected, skip checking bom header before operation."
             }
             [FileHeader]::Remove($File, $OutputPath, $removeOffset)
@@ -190,7 +193,8 @@ function Remove-Utf8BomHeader {
                     Write-Verbose "Bom already missing, detected header : $header"
                     return
                 }
-            } else {
+            }
+            else {
                 Write-Verbose "-Force paramter detected, skip checking bom header before operation."
             }
             [FileHeader]::Remove($Path, $OutputPath, $removeOffset)
