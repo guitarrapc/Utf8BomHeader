@@ -13,7 +13,6 @@ environment:
   GITHUB_RELEASE_API:
     secure: s55znS9PHRv9SOXWiAmrxjj9c166WrBKTFz7cQmA0wLp9tGzREudX8XmaqbQH3YT
   GUID: 11da18bb-f0d4-4509-b709-8b17efd8bb17
-  DEPLOY_TRIGGER_BRANCH: master
 
 install:
   - pwsh --version
@@ -41,11 +40,11 @@ deploy:
   draft: false
   prerelease: false
   on:
-    branch: ${DEPLOY_TRIGGER_BRANCH}                 # release from master branch only
-    APPVEYOR_REPO_TAG: true        # deploy on tag push only
+    branch: master                 # release from master branch only
+    #APPVEYOR_REPO_TAG: true        # deploy on tag push only
 
 deploy_script:
-  - pwsh -file ./run_psgallery_deploy.ps1 -NuGetApiKey ${PS_GELLERY_RELEASE_API} -BuildBranch ${DEPLOY_TRIGGER_BRANCH}
+  - pwsh -file ./run_psgallery_deploy.ps1 -NuGetApiKey ${PS_GELLERY_RELEASE_API} -BuildBranch master
 
 artifacts:
   - path: ./publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip
