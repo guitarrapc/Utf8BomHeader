@@ -1,4 +1,4 @@
-image: microsoft/powershell:ubuntu-xenial
+image: Ubuntu1804
 version: '1.0.{build}'
 shallow_clone: false
 skip_branch_with_pr: true
@@ -16,6 +16,25 @@ environment:
   DEPLOY_TRIGGER_BRANCH: master
 
 install:
+  - export NETCORE_VERSION=2.2
+  - sudo apt-get update && sudo apt-get install -y wget
+  # libicu60
+  - wget http://mirrors.kernel.org/ubuntu/pool/main/i/icu/libicu60_60.2-6ubuntu1_amd64.deb
+  - sudo dpkg -i libicu60_60.2-6ubuntu1_amd64.deb
+  # .net core
+  - wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
+  - sudo dpkg -i packages-microsoft-prod.deb
+  - sudo add-apt-repository universe
+  - sudo apt-get -y install apt-transport-https
+  - sudo apt-get update
+  - sudo apt-get -y install dotnet-sdk-${NETCORE_VERSION}
+  # pwsh
+  - export PS_VERSION=6.1.0
+  - export PS_PACKAGE=powershell_${PS_VERSION}-1.ubuntu.18.04_amd64.deb
+  - export PS_PACKAGE_URL=https://github.com/PowerShell/PowerShell/releases/download/v${PS_VERSION}/${PS_PACKAGE}
+  - wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
+  - sudo dpkg -i packages-microsoft-prod.deb
+  - sudo apt-get update && sudo apt-get install -y powershell
   - pwsh --version
   - pwsh -c Install-Module Pester -Scope CurrentUser -Force
 
