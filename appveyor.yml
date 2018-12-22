@@ -20,17 +20,17 @@ install:
   - pwsh --version
 
 before_build:
-  - sudo docker build -t utf8bomheader_build:latest .
-  - sudo docker image ls
+  - docker build -t utf8bomheader_build:latest .
+  - docker image ls
 
 build: off
 
 build_script:
-  - sudo docker run --rm -v "${PWD}/publish:/app/publish" utf8bomheader_build:latest "./build_psd1.ps1 -Version ${APPVEYOR_BUILD_VERSION}"
+  - docker run --rm -v "${PWD}/publish:/app/publish" utf8bomheader_build:latest "./build_psd1.ps1 -Version ${APPVEYOR_BUILD_VERSION}"
   - 7z a ./publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip ./publish/Utf8BomHeader/
 
 test_script:
-  - sudo docker run --rm utf8bomheader_build:latest "Invoke-Pester -CodeCoverage src/Utf8BomHeader.psm1"
+  - docker run --rm utf8bomheader_build:latest "Invoke-Pester -CodeCoverage src/Utf8BomHeader.psm1"
 
 deploy_script:
   - pwsh -file ./deploy_pagallery.ps1 -NuGetApiKey ${PS_GELLERY_RELEASE_API} -BuildBranch master -ModuleName Utf8BomHeader
