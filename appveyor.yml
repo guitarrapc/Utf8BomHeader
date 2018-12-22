@@ -27,13 +27,14 @@ build_script:
 
 test_script:
   - cd $APPVEYOR_BUILD_FOLDER
-  - pwsh -c "Invoke-Pester -OutputFormat NUnitXml -OutputFile testresult.xml -CodeCoverage src/Utf8BomHeader.psm1 -PassThru"
+  - pwsh -c "Invoke-Pester -OutputFormat NUnitXml -OutputFile testresult.xml -CodeCoverage src/Utf8BomHeader.psm1"
   - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'testresult.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/nunit/$APPVEYOR_JOB_ID"
 
 deploy:
-  release: ${APPVEYOR_REPO_TAG_NAME}
-  description: "${APPVEYOR_REPO_TAG_NAME} Release"
   provider: GitHub
+  #release: ${APPVEYOR_REPO_TAG_NAME}
+  release: 1.0.0
+  description: "${APPVEYOR_REPO_TAG_NAME} Release"
   auth_token:
     secure: ${GITHUB_RELEASE_API}
   artifact: ./publish/Utf8BomHeader_${APPVEYOR_REPO_TAG_NAME}.zip            # upload all NuGet packages to release assets
