@@ -17,18 +17,18 @@ environment:
   GUID: 11da18bb-f0d4-4509-b709-8b17efd8bb17
 
 install:
-  - docker build -t utf8bomheader_build:latest .
-  - docker image ls
+  - sudo docker build -t utf8bomheader_build:latest .
+  - sudo docker image ls
   - pwsh --version
 
 build: off
 
 build_script:
-  - docker run --rm -v "${PWD}/publish:/app/publish" utf8bomheader_build:latest "./build_psd1.ps1 -Version ${APPVEYOR_BUILD_VERSION}"
+  - sudo docker run --rm -v "${PWD}/publish:/app/publish" utf8bomheader_build:latest "./build_psd1.ps1 -Version ${APPVEYOR_BUILD_VERSION}"
   - 7z a ./publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip ./publish/Utf8BomHeader/
 
 test_script:
-  - docker run --rm utf8bomheader_build:latest "Invoke-Pester -CodeCoverage src/Utf8BomHeader.psm1"
+  - sudo docker run --rm utf8bomheader_build:latest "Invoke-Pester -CodeCoverage src/Utf8BomHeader.psm1"
 
 deploy_script:
   - pwsh -file ./deploy_pagallery.ps1 -NuGetApiKey ${PS_GELLERY_RELEASE_API} -BuildBranch master -ModuleName Utf8BomHeader
