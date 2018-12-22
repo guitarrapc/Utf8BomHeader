@@ -7,11 +7,11 @@ param (
 
 # validation
 if ($env:APPVEYOR_REPO_BRANCH -notmatch $BuildBranch) {
-    Write-Host -ForeGroundColor Yellow "`"Appveyor`" deployment has been skipped as environment variable has not matched (`"$env:APPVEYOR_REPO_BRANCH`" is `"$branch`", should be `"$branch`""
+    Write-Host -ForeGroundColor Yellow "`"Appveyor`" deployment has been skipped as environment variable has not matched (`"APPVEYOR_REPO_BRANCH`" is `"$env:APPVEYOR_REPO_BRANCH`", should be `"$branch`""
     return
 }
 if ([string]::IsNullOrWhiteSpace($env:APPVEYOR_REPO_TAG_NAME)) {
-    Write-Host -ForeGroundColor Yellow "`"Appveyor`" deployment has been skipped as environment variable has not matched (`"$env:APPVEYOR_REPO_TAG_NAME`" is blank)"
+    Write-Host -ForeGroundColor Yellow "`"Appveyor`" deployment has been skipped as `"APPVEYOR_REPO_TAG_NAME`" environment variable is blank"
     return
 }
 if ([string]::IsNullOrWhiteSpace($NuGetApiKey)) {
