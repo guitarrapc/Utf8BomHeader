@@ -28,7 +28,8 @@ build_script:
 
 test_script:
   - cd $APPVEYOR_BUILD_FOLDER
-  - pwsh -c "Invoke-Pester -OutputFormat NUnitXml -OutputFile testresult.xml"
+  - pwsh -c "$testresult = Invoke-Pester -OutputFormat NUnitXml -OutputFile testresult.xml -CodeCoverage src/Utf8BomHeader.psm1 -PassThru; "
+  - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'testresult.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/nunit/$APPVEYOR_JOB_ID"
 
 deploy:
   release: ${APPVEYOR_REPO_TAG_NAME}
@@ -49,7 +50,3 @@ deploy_script:
 artifacts:
   - path: ./publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip
     name: Utf8BomHeader_${APPVEYOR_BUILD_VERSION}
-
-on_finish:
-  - sh: |
-      find "$APPVEYOR_BUILD_FOLDER" -type f -name 'testresult.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/nunit/$APPVEYOR_JOB_ID"

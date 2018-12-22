@@ -76,3 +76,4 @@ gkconfig.yml
 # Project
 publish/
 tests/backup/
+testresult.xml
