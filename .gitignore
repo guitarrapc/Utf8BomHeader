@@ -74,6 +74,7 @@ StyleCop.Cache
 gkconfig.yml
 
 # Project
-publish/
+publish/**/*
+!publish/.gitkeep
 tests/backup/
 testresult.xml
