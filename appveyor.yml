@@ -50,3 +50,7 @@ deploy_script:
 artifacts:
   - path: ./publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip
     name: Utf8BomHeader_${APPVEYOR_BUILD_VERSION}
+
+on_finish:
+  - sh: |
+      curl -F "file=${APPVEYOR_BUILD_FOLDER}/TestResults.xml" "https://ci.appveyor.com/api/testresults/junit/${APPVEYOR_JOB_ID}"
