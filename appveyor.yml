@@ -17,9 +17,11 @@ environment:
   GUID: 11da18bb-f0d4-4509-b709-8b17efd8bb17
 
 install:
+  - pwsh --version
+
+before_build:
   - sudo docker build -t utf8bomheader_build:latest .
   - sudo docker image ls
-  - pwsh --version
 
 build: off
 
