@@ -36,5 +36,5 @@ deploy_script:
   - pwsh -file ./deploy_pagallery.ps1 -NuGetApiKey ${PS_GELLERY_RELEASE_API} -BuildBranch master -ModuleName Utf8BomHeader
 
 artifacts:
-  - path: "${APPVEYOR_BUILD_FOLDER}/publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip"
+  - path: ./publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip
     name: Utf8BomHeader_${APPVEYOR_BUILD_VERSION}
