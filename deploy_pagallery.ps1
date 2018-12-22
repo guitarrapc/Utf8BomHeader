@@ -1,6 +1,7 @@
 #!/usr/bin/env pwsh
 [OutputType([void])]
 param (
+    [string]$ModuleName,
     [string]$NuGetApiKey,
     [string]$BuildBranch
 )
@@ -24,16 +25,9 @@ Write-Host -ForegroundColor Green 'Running AppVeyor deploy script'
 
 # environment variables
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$moduleName = "Utf8BomHeader"
 $modulePath = "$here/publish/$moduleName"
 $manifestPath = "$here/publish/$moduleName/$moduleName.psd1"
 $version = $env:APPVEYOR_REPO_TAG_NAME
-$releaseNoteUrl = "https://github.com/guitarrapc/Utf8BomHeader/releases/tag/$version"
-
-# Update module manifest 
-Write-Host -ForegroundColor Green 'Creating new module manifest'
-. ./run_build.ps1 -Version $version
-Update-ModuleManifest -Path $manifestPath -ReleaseNotes $releaseNoteUrl
 
 # Test Version is correct
 $manifest = Invoke-Expression (Get-Content $manifestPath -Raw)

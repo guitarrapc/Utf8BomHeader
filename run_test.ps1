@@ -1,0 +1,1 @@
+docker run --rm utf8bomheader_build:latest "Invoke-Pester -CodeCoverage src/Utf8BomHeader.psm1"
