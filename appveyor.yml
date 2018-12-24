@@ -26,14 +26,14 @@ before_build:
 build: off
 
 build_script:
-  - docker run --rm -v "${APPVEYOR_BUILD_FOLDER}/publish:/app/publish" utf8bomheader_build:latest "./build_psd1.ps1 -Version ${APPVEYOR_BUILD_VERSION}"
+  - docker run --rm -v "${APPVEYOR_BUILD_FOLDER}/publish:/app/publish" utf8bomheader_build:latest "./build_psd1.ps1 -Version ${APPVEYOR_BUILD_VERSION}" -TagVersion ${APPVEYOR_REPO_TAG_NAME}
   - 7z a "${APPVEYOR_BUILD_FOLDER}/publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip" "${APPVEYOR_BUILD_FOLDER}/publish/Utf8BomHeader/"
 
 test_script:
   - docker run --rm utf8bomheader_build:latest "Invoke-Pester -CodeCoverage src/Utf8BomHeader.psm1"
 
 deploy_script:
-  - pwsh -file ./deploy_pagallery.ps1 -NuGetApiKey ${PS_GELLERY_RELEASE_API} -BuildBranch master -ModuleName Utf8BomHeader
+  - pwsh -file ./deploy_pagallery.ps1 -NuGetApiKey ${PS_GELLERY_RELEASE_API} -BuildBranch master -ModuleName Utf8BomHeader -TagVersion ${APPVEYOR_REPO_TAG_NAME}
 
 artifacts:
   - path: ./publish/Utf8BomHeader_${APPVEYOR_BUILD_VERSION}.zip
